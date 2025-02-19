@@ -7,6 +7,10 @@
 import express from "express";
 import cors from "cors"; // vai resolver quando se tem domínios diferentes no back-end e front-end
 import { db } from "./connect.js"; // variável db que foi criada em connect.js
+import path from "path";
+
+const __dirname = path.resolve();
+console.log(__dirname);
 
 const app = express();
 const PORT = 3001;
@@ -15,16 +19,23 @@ app.use(cors()); // usar o cors
 
 // app.use(express.json()); // usa-se ao fazer uma requisição POST
 
-app.get("/", (request, response) => {
+app.get("/api/", (request, response) => {
   response.send("Só vamos trabalhar com os endpoits '/artists' e '/songs'");
 });
 
-app.get("/artists", async (request, response) => {
+app.get("/api/artists", async (request, response) => {
   response.send(await db.collection("artists").find({}).toArray());
 });
 
-app.get("/songs", async (request, response) => {
+app.get("/api/songs", async (request, response) => {
   response.send(await db.collection("songs").find({}).toArray());
+});
+
+app.use(express.static(path.join(__dirname, "../front-end/dist"))); // middleware
+
+app.get("*", async (request, response) => {
+  // essa são todas as demais URLs que não existem e mostrar o index.htm de forma estática
+  response.sendFile(path.join(__dirname, "../front-end/dist/index.html"));
 });
 
 app.listen(PORT, () => {

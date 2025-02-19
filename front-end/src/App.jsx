@@ -58,8 +58,22 @@ export default App;
 // npm i express: instala o express que será usado para criar o back-end
 // node ./api/server.js: executa um servidor usando o arquivo .js,nesse caso quando houver qualquer atualização no arquivo será necessário matar o servidor e iniciar novamente
 // node --watch ./api/server.js: executa um servidor e observa o arquivo caso haja uma mudança reinicia o servidor
-//npm i axios: instala o axios para criar lógica de conexão com a api no back-end
+// npm i axios: instala o axios para criar lógica de conexão com a api no back-end
 // npm i cors: instala a middleware cors que é uma função que acontece no meio do caminho
+
+// Deploy:
+// npm init -y: cria um package.json padrão para deploy, sendo assim, será necessário adicionar em scripts a função build para instalar:
+// npm install --prefix back-end && npm install --prefix front-end && npm run build --prefix front-end
+// na variável start será adicionado npm run start --prefix back-end
+// No arquivo vite.config.js será adicionado build:{ target: 'esnext'} para pular uma parte top-Leve await que se refere aos navegadores alvo
+// Ao executar npm run build será criado uma pasta dist com os arquivos do projeto minificado, logo a pasta que queremos está na pasta dist
+// Antes de executar npm run start, é necessário criar o script start no package.json do back-end:
+// "start" : node ./api/server.js
+// Adicionar as rotas no arquivo back-end/servidor.js /api/.. e também em front/end/api/api.js adicionar no final da url /api
+// Criar arquivo .env dentro do front-end para as variáveis de ambiente
+// Importar uma biblioteca para poder acessar as variáveis de ambiente dentro do .env executar dentro da pasta front-end npm i dotenv
+// Para evitar que sejam acessadas urls que não existem será necessário encaminhar para o tela index.html na pasta dist do front-end usando middleware
+// Ir para pasta back-end e executar npm i path, usar o path para mostrar o diretório principal do arquivo server.js
 
 // {
 //   Array(item)
